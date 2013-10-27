@@ -5,7 +5,7 @@ source $OPENSHIFT_CARTRIDGE_SDK_BASH
 EXSERVER_BIN_DIR=${OPENSHIFT_EXSERVER_DIR}/bin
 
 cartridge_type="exserver"
-version=5.8
+version=6.0
 
 # Check if the server http port is up
 function ishttpup() {
