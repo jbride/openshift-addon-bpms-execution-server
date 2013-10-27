@@ -70,10 +70,10 @@ function replace_envs() {
 function start() {
 
   # no point in deploying ex server is database is not up
-  if ! isdbup; then
-    echo "Timed out waiting for database listener port"
-    exit 1
-  fi 
+  #if ! isdbup; then
+  #  echo "Timed out waiting for database listener port"
+  #  exit 1
+  #fi 
 
   echo "Starting $cartridge_type cart"
 
