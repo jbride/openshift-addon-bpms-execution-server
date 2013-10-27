@@ -122,19 +122,13 @@ function tidy() {
 }
 
 case "$1" in
-  isdbup)       isdbup ;;
-  build)	build ;;
-  deploy)       deploy ;;
-  start)     	start ;;
-  stop)      	stop ;;
-  restart)   	restart ;;
-  status)    	status ;;
-  reload)    	reload ;;
-  tidy)      	tidy ;;
-  *)         	exit 0
+    isdbup|build|deploy|start|stop|restart|status|reload|tidy)
+        $1
+        ;;
+    *)
 
-  echo 1>&2 $"Usage: $0 {isdbup|build|deploy|start|stop|restart|status|reload|tidy}"
-  exit 1
+    echo $"Usage: $0 {isdbup|build|deploy|start|stop|restart|status|reload|tidy}"
+    exit 1
 esac
 
 
