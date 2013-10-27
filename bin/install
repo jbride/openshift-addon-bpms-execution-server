@@ -1,0 +1,14 @@
+#!/bin/bash -eux
+
+case "$1" in
+  -v|--version)
+    version="$2"
+esac
+
+cp -r ${OPENSHIFT_EXSERVER_DIR}/versions/${version}/template/* ${OPENSHIFT_EXSERVER_DIR}/template
+cp -r ${OPENSHIFT_EXSERVER_DIR}/versions/${version}/template/.openshift ${OPENSHIFT_EXSERVER_DIR}/template
+mkdir -p ${OPENSHIFT_EXSERVER_DIR}/template/.openshift/config
+cp ${OPENSHIFT_EXSERVER_DIR}/conf/* ${OPENSHIFT_EXSERVER_DIR}/template/.openshift/config
+
+echo "$version" > "$OPENSHIFT_EXSERVER_DIR/env/OPENSHIFT_EXSERVER_VERSION"
+
