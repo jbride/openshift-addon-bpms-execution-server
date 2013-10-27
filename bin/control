@@ -10,15 +10,15 @@ version=6.0
 # Check if the server http port is up
 function isdbup() {
 
-    if [  "x$OPENSHIFT_MYSQL_IP" = "x" ]; then
+    if [  "x$OPENSHIFT_MYSQL_DB_IP" = "x" ]; then
         return 1
     fi
 
     let count=0
     while [ ${count} -lt 24 ]
     do
-        if /usr/sbin/lsof -P -n -i "@${OPENSHIFT_MYSQL_IP}:${OPENSHIFT_MYSQL_PORT}" | grep "(LISTEN)" > /dev/null; then
-            echo "Found ${OPENSHIFT_MYSQL_IP}:${OPENSHIFT_MYSQL_PORT} listening port"
+        if /usr/sbin/lsof -P -n -i "@${OPENSHIFT_MYSQL_DB_IP}:${OPENSHIFT_MYSQL_DB_PORT}" | grep "(LISTEN)" > /dev/null; then
+            echo "Found ${OPENSHIFT_MYSQL_DB_IP}:${OPENSHIFT_MYSQL_DB_PORT} listening port"
             return 0
         fi
         let count=${count}+1
@@ -132,6 +132,9 @@ case "$1" in
   reload)    	reload ;;
   tidy)      	tidy ;;
   *)         	exit 0
+
+  echo 1>&2 $"Usage: $0 {isdbup|build|deploy|start|stop|restart|status|reload|tidy}"
+  exit 1
 esac
 
 
