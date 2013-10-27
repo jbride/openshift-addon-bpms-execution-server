@@ -1,9 +1,9 @@
-if (outcome == success) of subsystem=datasources/data-source=MysqlDS:read-attribute(name=enabled)
-    subsystem=datasources/data-source=MysqlDS/:disable
-    subsystem=datasources/data-source=MysqlDS/:remove
+if (outcome == success) of /subsystem=datasources/data-source=MysqlDS:read-attribute(name=enabled)
+    /subsystem=datasources/data-source=MysqlDS/:disable
+    /subsystem=datasources/data-source=MysqlDS/:remove
 end-if
 
-if (outcome != success) of subsystem=datasources/data-source=jbpm-core-cp:read-attribute(name=enabled)
-    subsystem=datasources/data-source=jbpm-core-cp:add(jndi-name=java:jboss/datasources/jbpm-core-cp,connection-url=jdbc:mysql://${env.OPENSHIFT_MYSQL_DB_HOST}:${env.OPENSHIFT_MYSQL_DB_PORT},driver-class=com.mysql.jdbc.Driver,driver-name=mysql,user-name=${env.OPENSHIFT_MYSQL_DB_USERNAME},password=${env.OPENSHIFT_MYSQL_DB_PASSWORD},pool-name=jbpm-core_ds_pool,max-pool-size=50,min-pool-size=10)
-    subsystem=datasources/data-source=jbpm-core-cp:enable()
+if (outcome != success) of /subsystem=datasources/data-source=jbpm-core-cp:read-attribute(name=enabled)
+    /subsystem=datasources/data-source=jbpm-core-cp:add(jndi-name=java:jboss/datasources/jbpm-core-cp,connection-url=jdbc:mysql://${env.OPENSHIFT_MYSQL_DB_HOST}:${env.OPENSHIFT_MYSQL_DB_PORT},driver-class=com.mysql.jdbc.Driver,driver-name=mysql,user-name=${env.OPENSHIFT_MYSQL_DB_USERNAME},password=${env.OPENSHIFT_MYSQL_DB_PASSWORD},pool-name=jbpm-core_ds_pool,max-pool-size=50,min-pool-size=10)
+    /subsystem=datasources/data-source=jbpm-core-cp:enable()
 end-if
