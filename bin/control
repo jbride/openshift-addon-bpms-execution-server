@@ -10,16 +10,16 @@ version=6.0
 # Check if the server http port is up
 function isdbup() {
 
-    if [  "x${OPENSHIFT_MYSQL_DB_IP}" = "x" ]; then
-        echo "unable to locate the following env variable:  OPENSHIFT_MYSQL_DB_IP"
+    if [  "x${OPENSHIFT_MYSQL_DB_HOST}" = "x" ]; then
+        echo "unable to locate the following env variable:  OPENSHIFT_MYSQL_DB_HOST"
         return 1
     fi
 
     let count=0
     while [ ${count} -lt 24 ]
     do
-        if /usr/sbin/lsof -P -n -i "@${OPENSHIFT_MYSQL_DB_IP}:${OPENSHIFT_MYSQL_DB_PORT}" | grep "(LISTEN)" > /dev/null; then
-            echo "Found ${OPENSHIFT_MYSQL_DB_IP}:${OPENSHIFT_MYSQL_DB_PORT} listening port"
+        if /usr/sbin/lsof -P -n -i "@${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT}" | grep "(LISTEN)" > /dev/null; then
+            echo "Found ${OPENSHIFT_MYSQL_DB_HOST}:${OPENSHIFT_MYSQL_DB_PORT} listening port"
             return 0
         fi
         let count=${count}+1
@@ -71,13 +71,13 @@ function replace_envs() {
 function start() {
 
   # no point in deploying ex server is database is not up
-  #if ! isdbup; then
-  #  echo "Timed out waiting for database listener port"
-  #  exit 1
-  #fi 
+  if ! isdbup; then
+    echo "Timed out waiting for database listener port"
+    exit 0
+  fi 
 
   # 1) customize base jboss / bpms runtime by executing exserver cli
-  # $OPENSHIFT_JBOSSEAP_DIR/bin/tools/jboss-cli.sh --connect --controller=$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT -c --file=$OPENSHIFT_EXSERVER_DIR/versions/${bpms_version}/conf/exserver-project.cli
+  $OPENSHIFT_JBOSSEAP_DIR/bin/tools/jboss-cli.sh --connect --controller=$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT -c --file=$OPENSHIFT_EXSERVER_DIR/versions/${bpms_version}/conf/exserver-project.cli
 
   echo "Starting $cartridge_type cart"
 
