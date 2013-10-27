@@ -5,9 +5,11 @@ case "$1" in
     version="$2"
 esac
 
+bpms_version=6.0
+
 # The setup script must be reentrant. 
 # OpenShift Enterprise runs the script for every upgrade that is not backward compatible. 
 # Add logic you want to run only once to the install script, not the setup script.
 
 # 1) customize base jboss / bpms runtime by executing exserver cli
-#$OPENSHIFT_JBOSSEAP_DIR/bin/jboss-cli.sh --connect --controller=$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT -c $OPENSHIFT_EXSERVER_DIR/conf/exserver-project.cli
+$OPENSHIFT_JBOSSEAP_DIR/bin/jboss-cli.sh --connect --controller=$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT -c $OPENSHIFT_EXSERVER_DIR/versions/${bpms_version}/conf/exserver-project.cli

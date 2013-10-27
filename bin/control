@@ -8,13 +8,17 @@ cartridge_type="exserver"
 version=6.0
 
 # Check if the server http port is up
-function ishttpup() {
+function isdbup() {
+
+    if [  "x$OPENSHIFT_MYSQL_IP" = "x" ]; then
+        return 1
+    fi
 
     let count=0
     while [ ${count} -lt 24 ]
     do
-        if /usr/sbin/lsof -P -n -i "@${OPENSHIFT_EXSERVER_IP}:${OPENSHIFT_EXSERVER_HTTP_PORT}" | grep "(LISTEN)" > /dev/null; then
-            echo "Found ${OPENSHIFT_EXSERVER_IP}:${OPENSHIFT_EXSERVER_HTTP_PORT} listening port"
+        if /usr/sbin/lsof -P -n -i "@${OPENSHIFT_MYSQL_IP}:${OPENSHIFT_MYSQL_PORT}" | grep "(LISTEN)" > /dev/null; then
+            echo "Found ${OPENSHIFT_MYSQL_IP}:${OPENSHIFT_MYSQL_PORT} listening port"
             return 0
         fi
         let count=${count}+1
@@ -64,9 +68,16 @@ function replace_envs() {
 }
 
 function start() {
+
+  # no point in deploying ex server is database is not up
+  if ! isdbup; then
+    echo "Timed out waiting for database listener port"
+    exit 1
+  fi 
+
   echo "Starting $cartridge_type cart"
 
-  # JA Bride: link exserver web archive to jboss deployment directory
+  # JA Bride: link exserver web archive to jboss deployment directory if mysql database is up
   
 }
 
@@ -74,7 +85,7 @@ function start() {
 function stop() {
   echo "Stopping $cartridge_type cart"
 
-  # JA Bride:  rm soft link from exserver web archive to jboss deployment directory
+  # JA Bride:  rm soft link from exserver web archive to jboss deployment directory if exists
   
 }
 
