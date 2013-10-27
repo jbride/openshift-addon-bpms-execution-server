@@ -2,7 +2,7 @@ Name: exserver
 Cartridge-Short-Name: EXSERVER
 Display-Name: BPMS Execution Server
 Description: ""
-Version: '6.0.0.CR5'
+Version: '6.0'
 License: Apache
 License-Url: http://www.apache.org/licenses/LICENSE-2.0.html
 Vendor: Red Hat
@@ -41,10 +41,10 @@ Cart-Data:
     Type: environment
     Description: "Unique ID which identified the gear. This value changes between gears."
 Provides:
-  - "exserver-6.0.0.CR5"
+  - "exserver-6.0"
   - "exserver"
-  - "exserver(version) = 6.0.0.CR5"
-  - "exserver(version) >= 6.0.0.CR5"
+  - "exserver(version) = 6.0"
+  - "exserver(version) >= 6.0"
 Publishes:
 Scaling:
   Min: 1
