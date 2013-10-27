@@ -66,9 +66,9 @@ function replace_envs() {
 function start() {
   echo "Starting $cartridge_type cart"
   
-  copy_conf
+  #copy_conf
   
-  replace_envs
+  #replace_envs
     
 }
 
