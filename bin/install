@@ -5,11 +5,12 @@ case "$1" in
     version="$2"
 esac
 
-cp -r ${OPENSHIFT_EXSERVER_DIR}/versions/${version}/template/.openshift ${OPENSHIFT_EXSERVER_DIR}/template
+# The install script creates and configures files that OpenShift Enterprise copies from the cartridge repository to the gear's directory. 
+# OpenShift Enterprise runs the install script only on the first installation of a cartridge.
+# Put logic for one-time operations, for example generating passwords, creating ssh keys, and adding environment variables, in the install script.
 
 # create and populate directory with project's version controlled artifacts
-mkdir -p ${OPENSHIFT_EXSERVER_DIR}/template/.openshift/config
-#cp ${OPENSHIFT_EXSERVER_DIR}/conf/* ${OPENSHIFT_EXSERVER_DIR}/template/.openshift/config
+cp -r ${OPENSHIFT_EXSERVER_DIR}/versions/${version}/template/.openshift ${OPENSHIFT_EXSERVER_DIR}/template
 
 echo "$version" > "$OPENSHIFT_EXSERVER_DIR/env/OPENSHIFT_EXSERVER_VERSION"
 

@@ -5,7 +5,6 @@ case "$1" in
     version="$2"
 esac
 
-mkdir -p ${OPENSHIFT_EXSERVER_DIR}/template
-
-cp -r ${OPENSHIFT_EXSERVER_DIR}/versions/${version}/ ${OPENSHIFT_EXSERVER_DIR}/
-
+# The setup script must be reentrant. 
+# OpenShift Enterprise runs the script for every upgrade that is not backward compatible. 
+# Add logic you want to run only once to the install script, not the setup script.
