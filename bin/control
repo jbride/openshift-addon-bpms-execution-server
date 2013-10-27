@@ -65,16 +65,17 @@ function replace_envs() {
 
 function start() {
   echo "Starting $cartridge_type cart"
+
+  # JA Bride: link exserver web archive to jboss deployment directory
   
-  #copy_conf
-  
-  #replace_envs
-    
 }
 
 
 function stop() {
-  	echo "Stopping $cartridge_type cart"
+  echo "Stopping $cartridge_type cart"
+
+  # JA Bride:  rm soft link from exserver web archive to jboss deployment directory
+  
 }
 
 function restart() {

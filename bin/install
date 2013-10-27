@@ -9,9 +9,6 @@ esac
 # OpenShift Enterprise runs the install script only on the first installation of a cartridge.
 # Put logic for one-time operations, for example generating passwords, creating ssh keys, and adding environment variables, in the install script.
 
-# create and populate directory with project's version controlled artifacts
+# 1)  create and populate directory with project's version controlled artifacts
 mkdir ${OPENSHIFT_EXSERVER_DIR}/template
 cp -r ${OPENSHIFT_EXSERVER_DIR}/versions/${version}/template/.openshift ${OPENSHIFT_EXSERVER_DIR}/template
-
-echo "$version" > "$OPENSHIFT_EXSERVER_DIR/env/OPENSHIFT_EXSERVER_VERSION"
-
