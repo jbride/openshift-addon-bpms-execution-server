@@ -43,7 +43,7 @@ function deploy() {
 
 function copy_conf() {
     # copy any project CLI files to filtered directory
-    mkdir ${OPENSHIFT_EXSERVER_DIR}/filtered
+    mkdir -p ${OPENSHIFT_EXSERVER_DIR}/filtered
     cp ${OPENSHIFT_EXSERVER_DIR}/versions/${version}/conf/* ${OPENSHIFT_EXSERVER_DIR}/filtered
 }
 
@@ -82,7 +82,7 @@ function start() {
     $OPENSHIFT_JBOSSEAP_DIR/bin/tools/jboss-cli.sh --connect --controller=$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT -c --file=$OPENSHIFT_EXSERVER_DIR/filtered/exserver-project.cli
 
     # 3)  make kieFileSystem if not already exists and copy kie.deployments.json to $OPENSHIFT_DATA_DIR
-    mkdir $OPENSHIFT_DATA_DIR/kieFilesystem
+    mkdir -p $OPENSHIFT_DATA_DIR/kieFilesystem
     cp ${OPENSHIFT_EXSERVER_DIR}/filtered/kie.deployments.json $OPENSHIFT_DATA_DIR
 
     # 4) link exserver web archive to jboss deployment directory
