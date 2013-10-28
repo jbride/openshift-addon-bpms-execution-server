@@ -66,10 +66,7 @@ function replace_envs() {
     for f in ${OPENSHIFT_EXSERVER_DIR}/filtered/*.*
     do
         sed -i -e "s/\${env.OPENSHIFT_JBOSSEAP_IP}/$OPENSHIFT_JBOSSEAP_IP/g" $f |
-        sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_HOST}/$OPENSHIFT_MYSQL_DB_HOST/g" $f |
-        sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_PORT}/$OPENSHIFT_MYSQL_DB_PORT/g" $f |
-        sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_USERNAME}/$OPENSHIFT_MYSQL_DB_USERNAME/g" $f |
-        sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_PASSWORD}/$OPENSHIFT_MYSQL_DB_PASSWORD/g" $f 
+        sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_URL}/$OPENSHIFT_MYSQL_DB_URL/g" $f |
     done
 }
 
@@ -82,7 +79,6 @@ function start() {
     fi 
 
 
-    echo "*********  id is" `id`
     echo "mysql is up!  Starting $cartridge_type cart"
 
     # 0) copy and filter and substition variables to various CLI and SQL scripts used in subsequent operations
@@ -90,6 +86,7 @@ function start() {
     replace_envs
 
     # 1) create exserver database if doesn't already exist
+    #    NOTE:  not sure why can't connect to mysql host while in this start block without having to specify host details
     mysql -u $OPENSHIFT_MYSQL_DB_USERNAME -p mysql -h $OPENSHIFT_MYSQL_DB_HOST -p$OPENSHIFT_MYSQL_DB_PASSWORD < $OPENSHIFT_EXSERVER_DIR/filtered/exserver.sql
 
     # 2) customize base jboss / bpms runtime by executing exserver cli
