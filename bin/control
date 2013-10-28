@@ -94,6 +94,9 @@ function start() {
 
     # 5) start deployment service
     curl -v -u jboss:brms -X PUT http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/all/deploymentUnits
+    if [ $? -gt 0  ]; then
+        echo "Start:  error deploying kie-services-remote.war"
+    fi
   
 }
 
