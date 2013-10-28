@@ -81,6 +81,8 @@ function start() {
         exit 0
     fi 
 
+    id > /tmp/id.txt
+
     echo "mysql is up!  Starting $cartridge_type cart"
 
     # 0) copy and filter and substition variables to various CLI and SQL scripts used in subsequent operations
