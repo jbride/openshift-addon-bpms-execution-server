@@ -10,5 +10,5 @@ esac
 # Put logic for one-time operations, for example generating passwords, creating ssh keys, and adding environment variables, in the install script.
 
 # 1)  create and populate directory with project's version controlled artifacts
-mkdir ${OPENSHIFT_EXSERVER_DIR}/template
-cp -r ${OPENSHIFT_EXSERVER_DIR}/versions/${version}/template/.openshift ${OPENSHIFT_EXSERVER_DIR}/template
+#mkdir ${OPENSHIFT_EXSERVER_DIR}/template
+#cp -r ${OPENSHIFT_EXSERVER_DIR}/versions/${version}/template/.openshift ${OPENSHIFT_EXSERVER_DIR}/template

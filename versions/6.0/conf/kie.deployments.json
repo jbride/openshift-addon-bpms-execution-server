@@ -1,0 +1,33 @@
+{
+    "localFileSystem":{
+        "deploymentId": "local-playground",
+        "ksession.strategy": "PER_PROCESS_INSTANCE",
+        "engine.type": "IN_MEMORY",
+        "repoFolder": "${org.kie.nio.git.dir}/local-playground"
+    },
+    "git":{
+        "deploymentId": "git-playground",
+        "ksession.strategy": "PER_PROCESS_INSTANCE",
+        "engine.type": "JPA",
+        "marshalling.strategies":[
+            "new ProcessInstanceResolverStrategy()",
+            "new JPAPlaceholderResolverStrategy(env)",
+            "new SerializablePlaceholderResolverStrategy(ClassObjectMarshallingStrategyAcceptor.DEFAULT)"
+        ],
+        "remoteGitUrl": "https://github.com/jboss-sso/gpe-playground.git",
+        "repoFolder": "processes/general",
+        "repoAlias": "gpe-playground",
+        "gitUser": "guvnorngtestuser1",
+        "gitPasswd": "test1234",
+        "gitOutDir": "${org.kie.nio.git.dir}/.niogit/gpe-playground.git"
+    },
+    "kjar":{
+        "comment": "no deploymentId.  instead, unique identifier =  <groupId>:<artifactId>:<version>",
+        "ksession.strategy": "PER_PROCESS_INSTANCE",
+        "engine.type": "JPA",
+        "groupId":  "com.redhat.gpe",
+        "artifactId":  "test-module",
+        "version":  "1.0"
+    }
+
+}

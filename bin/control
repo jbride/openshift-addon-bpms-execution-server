@@ -6,6 +6,7 @@ EXSERVER_BIN_DIR=${OPENSHIFT_EXSERVER_DIR}/bin
 
 cartridge_type="exserver"
 version=6.0
+kieDir=$OPENSHIFT_DATA_DIR/kieFileSystem
 
 # Check if the server http port is up
 function isdbup() {
@@ -41,36 +42,20 @@ function deploy() {
 }
 
 function copy_conf() {
-	# Create a link for each file in user config to server standalone/config
-	if [ -d ${OPENSHIFT_REPO_DIR}.openshift/config ]
-	then
-	  for f in ${OPENSHIFT_REPO_DIR}.openshift/config/*
-	  do
-	    target=$(basename $f)
-	    # Remove any target that is being overwritten
-	    if [ -e "${OPENSHIFT_EXSERVER_DIR}/conf/$target" ]
-	    then
-	       echo "Removing existing $target"
-	       rm -rf "${OPENSHIFT_EXSERVER_DIR}/conf/$target"
-	       cp ${OPENSHIFT_REPO_DIR}.openshift/config/$target ${OPENSHIFT_EXSERVER_DIR}/conf
-	    fi
-	  done
-	fi
-
     # copy any project CLI files to filtered directory
     mkdir ${OPENSHIFT_EXSERVER_DIR}/filtered
     cp ${OPENSHIFT_EXSERVER_DIR}/versions/${version}/conf/* ${OPENSHIFT_EXSERVER_DIR}/filtered
 }
 
 function replace_envs() {
-    echo "**** db url = $OPENSHIFT_MYSQL_DB_URL" 
     for f in ${OPENSHIFT_EXSERVER_DIR}/filtered/*.*
     do
         sed -i -e "s/\${env.OPENSHIFT_JBOSSEAP_IP}/$OPENSHIFT_JBOSSEAP_IP/g" $f |
         sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_HOST}/$OPENSHIFT_MYSQL_DB_HOST/g" $f |
         sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_PORT}/$OPENSHIFT_MYSQL_DB_PORT/g" $f |
         sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_USERNAME}/$OPENSHIFT_MYSQL_DB_USERNAME/g" $f |
-        sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_PASSWORD}/$OPENSHIFT_MYSQL_DB_PASSWORD/g" $f
+        sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_PASSWORD}/$OPENSHIFT_MYSQL_DB_PASSWORD/g" $f |
+        sed -i -e "s/\${org.kie.nio.git.dir}/$kieDir/g" $f 
     done
 }
 
