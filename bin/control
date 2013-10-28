@@ -93,10 +93,8 @@ function start() {
     cp ${OPENSHIFT_EXSERVER_DIR}/filtered/kie.deployments.json $OPENSHIFT_DATA_DIR
 
 
-    # 5) link exserver web archive to jboss deployment directory
-
-    # 6) start deployment service
-    curl -v -u jboss:brms -X PUT http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/all/deploymentUnits
+    # 5) start deployment service
+    # curl -v -u jboss:brms -X PUT http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/all/deploymentUnits
   
 }
 
