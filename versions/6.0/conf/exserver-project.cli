@@ -10,29 +10,27 @@ if (outcome == success) of /subsystem=datasources/data-source=MysqlDS:read-attri
     /subsystem=datasources/data-source=MysqlDS/:remove
 end-if
 
-if (outcome == success) of /system-property=org.jboss.processFlow.deployments.json.config.path:read-attribute()
-    /system-property=org.jboss.processFlow.deployments.json.config.path:remove()
+if (outcome != success) of /system-property=org.jboss.processFlow.cdi.space.delimited.veto.classes:read-attribute()
+    /system-property=org.jboss.processFlow.cdi.space.delimited.veto.classes/:add(value="org.jbpm.shared.services.impl.events.JbpmServicesEventImpl org.jbpm.shared.services.impl.tx.CMTBTMTransaction org.jbpm.kie.services.impl.form.FormProviderServiceImpl org.jbpm.kie.services.impl.VFSDeploymentService org.jbpm.kie.services.impl.KModuleDeploymentService")
 end-if
-if (outcome == success) of /system-property=org.kie.nio.git.daemon.enabled:read-attribute()
-    /system-property=org.kie.nio.git.daemon.enabled:remove()
-end-if
-if (outcome == success) of /system-property=org.quartz.properties:read-attribute()
-    /system-property=org.quartz.properties:remove()
-end-if
-if (outcome == success) of /system-property=jdbc.module.name:read-attribute()
-    /system-property=jdbc.module.name:remove()
-end-if
-if (outcome == success) of /system-property=org.apache.cxf.stax.allowInsecureParser:read-attribute()
-    /system-property=org.apache.cxf.stax.allowInsecureParser:remove()
-end-if
-if (outcome == success) of /system-property=jbpm.audit.jms.enabled:read-attribute()
-    /system-property=jbpm.audit.jms.enabled:remove()
-end-if
-
+if (outcome != success) of /system-property=org.jboss.processFlow.deployments.json.config.path:read-attribute()
     /system-property=org.jboss.processFlow.deployments.json.config.path/:add(value="${env.OPENSHIFT_DATA_DIR}/kieFilesystem/kie.deployments.json}")
+end-if
+if (outcome != success) of /system-property=org.kie.nio.git.daemon.enabled:read-attribute()
     /system-property=org.kie.nio.git.daemon.enabled/:add(value="false")
+end-if
+if (outcome != success) of /system-property=org.quartz.properties:read-attribute()
     /system-property=org.quartz.properties/:add(value="${org.quartz.properties}")
+end-if
+if (outcome != success) of /system-property=jdbc.module.name:read-attribute()
     /system-property=jdbc.module.name/:add(value="${jdbc.module.name}")
+end-if
+if (outcome != success) of /system-property=org.apache.cxf.stax.allowInsecureParser:read-attribute()
     /system-property=org.apache.cxf.stax.allowInsecureParser/:add(value="true")
+end-if
+if (outcome != success) of /system-property=jbpm.audit.jms.enabled:read-attribute()
     /system-property=jbpm.audit.jms.enabled/:add(value="true")
-
+end-if
+if (outcome != success) of /system-property=hibernate.hbm2ddl.auto:read-attribute()
+    /system-property=hibernate.hbm2ddl.auto/:add(value="true")
+end-if
