@@ -56,8 +56,7 @@ function replace_envs() {
         sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_PORT}/$OPENSHIFT_MYSQL_DB_PORT/g" $f
         sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_USERNAME}/$OPENSHIFT_MYSQL_DB_USERNAME/g" $f
         sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_PASSWORD}/$OPENSHIFT_MYSQL_DB_PASSWORD/g" $f
-        sed -i -e "s/\${org.jboss.processFlow.bam.queue}/processFlow.asyncWorkingMemoryLogger/" $f
-        sed -i -e "s/\${org.jboss.processFlow.bam.queue}/processFlow.asyncWorkingMemoryLogger/" $f
+        sed -i -e "s/\${org.jboss.processFlow.bam.queue}/processFlow.asyncWorkingMemoryLogger/g" $f
         sed -i -e "s@\${env.deployDir}@$OPENSHIFT_EXSERVER_DIR/versions/$version/deployments@" $f
         sed -i -e "s@\${env.kieDir}@$OPENSHIFT_DATA_DIR/kieFilesystem@" $f
     done
@@ -99,9 +98,9 @@ function start() {
 }
 
 function printExServerRestCalls() {
-    echo "check ExServer availability:  curl -v -u jboss:brms -X GET http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/any/sanityCheck";
-    echo "kick deployment service: curl -v -u jboss:brms -X PUT http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/all/deploymentUnits";
-    echo "check WIH registration:  curl -v -u jboss:brms -X GET http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/com.redhat.gpe:test-module:1.0/workItemHandlers";
+    echo "check ExServer availability           :  curl -v -u jboss:brms -X GET http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/any/sanityCheck";
+    echo "kick start deployment service         : curl -v -u jboss:brms -X PUT http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/all/deploymentUnits";
+    echo "check WIH registration                :  curl -v -u jboss:brms -X GET http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/com.redhat.gpe:test-module:1.0/workItemHandlers";
     echo "review bpmn2 processes of a deployment:  curl -v -u jboss:brms -X GET http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/com.redhat.gpe:test-module:1.0/processes";
     
 }
