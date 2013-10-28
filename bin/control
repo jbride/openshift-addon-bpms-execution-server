@@ -110,7 +110,11 @@ function printExServerRestCalls() {
 function stop() {
   echo "Stopping $cartridge_type cart"
 
-  # JA Bride:  rm soft link from exserver web archive to jboss deployment directory if exists
+  # attempt to undeploy ki-services-remote.war
+  $OPENSHIFT_JBOSSEAP_DIR/bin/tools/jboss-cli.sh --connect --controller=$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT -c --command="undeploy kie-services-remote.war"
+  if [ $? -gt 0  ]; then
+    echo "Stop:  error attempting to undeploy kie-services-remote.war"
+  fi
   
 }
 
