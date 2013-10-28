@@ -34,3 +34,5 @@ end-if
 if (outcome != success) of /system-property=hibernate.hbm2ddl.auto:read-attribute()
     /system-property=hibernate.hbm2ddl.auto/:add(value="create")
 end-if
+
+deploy ${env.deployDir}/kie-services-remote.war
