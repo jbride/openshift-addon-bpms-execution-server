@@ -88,7 +88,7 @@ function start() {
     replace_envs
 
     # 1) create exserver database if doesn't already exist
-    cat $OPENSHIFT_EXSERVER_DIR/filtered/exserver.sql | mysql
+    #cat $OPENSHIFT_EXSERVER_DIR/filtered/exserver.sql | mysql
 
     # 2) customize base jboss / bpms runtime by executing exserver cli
     $OPENSHIFT_JBOSSEAP_DIR/bin/tools/jboss-cli.sh --connect --controller=$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT -c --file=$OPENSHIFT_EXSERVER_DIR/filtered/exserver-project.cli
