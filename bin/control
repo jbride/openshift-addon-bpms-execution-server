@@ -48,15 +48,16 @@ function copy_conf() {
 }
 
 function replace_envs() {
-    for f in ${OPENSHIFT_EXSERVER_DIR}/filtered/*.*
+    for f in ${OPENSHIFT_EXSERVER_DIR}/filtered/*.cli
     do
         sed -i -e "s/\${env.OPENSHIFT_JBOSSEAP_IP}/$OPENSHIFT_JBOSSEAP_IP/g" $f |
         sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_HOST}/$OPENSHIFT_MYSQL_DB_HOST/g" $f |
         sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_PORT}/$OPENSHIFT_MYSQL_DB_PORT/g" $f |
         sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_USERNAME}/$OPENSHIFT_MYSQL_DB_USERNAME/g" $f |
-        sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_PASSWORD}/$OPENSHIFT_MYSQL_DB_PASSWORD/g" $f |
-        sed -i -e "s/\${org.kie.nio.git.dir}/$kieDir/g" $f 
+        sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_PASSWORD}/$OPENSHIFT_MYSQL_DB_PASSWORD/g" $f
     done
+
+    sed -i -e "s/\${org.kie.nio.git.dir}/$kieDir/g" ${OPENSHIFT_EXSERVER_DIR}/filtered/kie.deployments.json
 }
 
 function start() {
