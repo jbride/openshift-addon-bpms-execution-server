@@ -12,23 +12,27 @@ end-if
 
 if (outcome == success) of /system-property=org.jboss.processFlow.deployments.json.config.path:read-attribute()
     /system-property=org.jboss.processFlow.deployments.json.config.path:remove()
+end-if
 if (outcome == success) of /system-property=org.kie.nio.git.daemon.enabled:read-attribute()
     /system-property=org.kie.nio.git.daemon.enabled:remove()
+end-if
 if (outcome == success) of /system-property=org.quartz.properties:read-attribute()
     /system-property=org.quartz.properties:remove()
+end-if
 if (outcome == success) of /system-property=jdbc.module.name:read-attribute()
     /system-property=jdbc.module.name:remove()
+end-if
 if (outcome == success) of /system-property=org.apache.cxf.stax.allowInsecureParser:read-attribute()
     /system-property=org.apache.cxf.stax.allowInsecureParser:remove()
+end-if
 if (outcome == success) of /system-property=jbpm.audit.jms.enabled:read-attribute()
     /system-property=jbpm.audit.jms.enabled:remove()
+end-if
 
-batch
     /system-property=org.jboss.processFlow.deployments.json.config.path/:add(value="${env.OPENSHIFT_DATA_DIR}/kieFilesystem/kie.deployments.json}",boot-time=true)
     /system-property=org.kie.nio.git.daemon.enabled/:add(value="false",boot-time=true)
     /system-property=org.quartz.properties/:add(value="${org.quartz.properties}",boot-time=true)
     /system-property=jdbc.module.name/:add(value="${jdbc.module.name}",boot-time=true)
     /system-property=org.apache.cxf.stax.allowInsecureParser/:add(value="true",boot-time=true)
     /system-property=jbpm.audit.jms.enabled/:add(value="true",boot-time=true)
-run-batch
 
