@@ -58,6 +58,7 @@ function copy_conf() {
 	else
 		cp ${OPENSHIFT_EXSERVER_DIR}/versions/${version}/conf/* ${OPENSHIFT_EXSERVER_DIR}/conf
 	fi
+	cp ${OPENSHIFT_EXSERVER_DIR}/versions/${version}/conf/* ${OPENSHIFT_EXSERVER_DIR}/conf
 }
 
 function replace_envs() {
