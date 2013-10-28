@@ -57,7 +57,7 @@ function replace_envs() {
         sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_PASSWORD}/$OPENSHIFT_MYSQL_DB_PASSWORD/g" $f
     done
 
-    sed -i -e "s/\${org.kie.nio.git.dir}/$kieDir/g" ${OPENSHIFT_EXSERVER_DIR}/filtered/kie.deployments.json
+    # sed -i -e "s/\${org.kie.nio.git.dir}/$kieDir/g" ${OPENSHIFT_EXSERVER_DIR}/filtered/kie.deployments.json
 }
 
 function start() {
