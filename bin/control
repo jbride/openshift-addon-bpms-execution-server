@@ -81,17 +81,20 @@ function start() {
         exit 0
     fi 
 
+    echo "mysql is up!  Starting $cartridge_type cart"
+
+    # 0) copy and filter and substition variables to various CLI and SQL scripts used in subsequent operations
+    copy_conf
+    replace_envs
+
     # 1) create exserver database if doesn't already exist
     cat $OPENSHIFT_EXSERVER_DIR/filtered/exserver.sql | mysql
 
     # 2) customize base jboss / bpms runtime by executing exserver cli
-    copy_conf
-    replace_envs
     $OPENSHIFT_JBOSSEAP_DIR/bin/tools/jboss-cli.sh --connect --controller=$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT -c --file=$OPENSHIFT_EXSERVER_DIR/filtered/exserver-project.cli
 
-  echo "Starting $cartridge_type cart"
 
-  # JA Bride: link exserver web archive to jboss deployment directory if mysql database is up
+    # 3) link exserver web archive to jboss deployment directory
   
 }
 
