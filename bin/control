@@ -77,7 +77,14 @@ function start() {
   fi 
 
   # 1) customize base jboss / bpms runtime by executing exserver cli
-  $OPENSHIFT_JBOSSEAP_DIR/bin/tools/jboss-cli.sh --connect --controller=$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT -c --file=$OPENSHIFT_EXSERVER_DIR/versions/${version}/conf/exserver-project.cli
+  dbHost=$OPENSHIFT_MYSQL_DB_HOST
+  dbPort=$OPENSHIFT_MYSQL_DB_PORT
+  dbUser=$OPENSHIFT_MYSQL_DB_USER
+  dbPwd=$OPENSHIFT_MYSQL_DB_PASSWORD
+  cliIn=$OPENSHIFT_EXSERVER_DIR/versions/${version}/conf/exserver-project.cli
+  cliOut=/tmp/exserver-project.cli
+  sed -e "s/\${dbHost}/$dbHost/" $cliIn | sed -e "s/\${dbPort}/$dbPort/" | sed -e "s/\${dbUser}/$dbUser/" > sed -e "s/\${dbPwd}/$dbPwd}/" > $cliOut
+  $OPENSHIFT_JBOSSEAP_DIR/bin/tools/jboss-cli.sh --connect --controller=$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT -c --file=$cliOut
 
   echo "Starting $cartridge_type cart"
 
