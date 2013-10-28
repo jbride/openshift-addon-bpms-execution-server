@@ -48,16 +48,15 @@ function copy_conf() {
 }
 
 function replace_envs() {
-    for f in ${OPENSHIFT_EXSERVER_DIR}/filtered/*.cli
+    for f in ${OPENSHIFT_EXSERVER_DIR}/filtered/*.*
     do
         sed -i -e "s/\${env.OPENSHIFT_JBOSSEAP_IP}/$OPENSHIFT_JBOSSEAP_IP/g" $f |
         sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_HOST}/$OPENSHIFT_MYSQL_DB_HOST/g" $f |
         sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_PORT}/$OPENSHIFT_MYSQL_DB_PORT/g" $f |
         sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_USERNAME}/$OPENSHIFT_MYSQL_DB_USERNAME/g" $f |
-        sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_PASSWORD}/$OPENSHIFT_MYSQL_DB_PASSWORD/g" $f
+        sed -i -e "s/\${env.OPENSHIFT_MYSQL_DB_PASSWORD}/$OPENSHIFT_MYSQL_DB_PASSWORD/g" $f |
+        sed -i -e "s/\${env.kieDir}/$OPENSHIFT_DATADIR\/kieFilesystem/g" $f
     done
-
-    # sed -i -e "s/\${org.kie.nio.git.dir}/$kieDir/g" ${OPENSHIFT_EXSERVER_DIR}/filtered/kie.deployments.json
 }
 
 function start() {
@@ -82,8 +81,11 @@ function start() {
     # 2) customize base jboss / bpms runtime by executing exserver cli
     $OPENSHIFT_JBOSSEAP_DIR/bin/tools/jboss-cli.sh --connect --controller=$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT -c --file=$OPENSHIFT_EXSERVER_DIR/filtered/exserver-project.cli
 
+    # 3)  make kieFileSystem if not already exists and copy kie.deployments.json to $OPENSHIFT_DATA_DIR
+    mkdir $OPENSHIFT_DATA_DIR/kieFilesystem
+    cp ${OPENSHIFT_EXSERVER_DIR}/filtered/kie.deployments.json $OPENSHIFT_DATA_DIR
 
-    # 3) link exserver web archive to jboss deployment directory
+    # 4) link exserver web archive to jboss deployment directory
   
 }
 

@@ -3,7 +3,7 @@
         "deploymentId": "local-playground",
         "ksession.strategy": "PER_PROCESS_INSTANCE",
         "engine.type": "IN_MEMORY",
-        "repoFolder": "${org.kie.nio.git.dir}/local-playground"
+        "repoFolder": "${env.kieDir}/local-playground"
     },
     "git":{
         "deploymentId": "git-playground",
@@ -19,7 +19,7 @@
         "repoAlias": "gpe-playground",
         "gitUser": "guvnorngtestuser1",
         "gitPasswd": "test1234",
-        "gitOutDir": "${org.kie.nio.git.dir}/.niogit/gpe-playground.git"
+        "gitOutDir": "${env.kieDir}/.niogit/gpe-playground.git"
     },
     "kjar":{
         "comment": "no deploymentId.  instead, unique identifier =  <groupId>:<artifactId>:<version>",
