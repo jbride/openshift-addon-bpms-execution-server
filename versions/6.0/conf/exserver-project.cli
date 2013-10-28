@@ -32,5 +32,5 @@ if (outcome != success) of /system-property=jbpm.audit.jms.enabled:read-attribut
     /system-property=jbpm.audit.jms.enabled/:add(value="true")
 end-if
 if (outcome != success) of /system-property=hibernate.hbm2ddl.auto:read-attribute()
-    /system-property=hibernate.hbm2ddl.auto/:add(value="true")
+    /system-property=hibernate.hbm2ddl.auto/:add(value="create")
 end-if

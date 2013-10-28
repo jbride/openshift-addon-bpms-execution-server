@@ -100,9 +100,8 @@ function stop() {
 function restart() {
     echo "Restarting $cartridge_type cart"
    
-  	stop
-  	
-  	start
+    stop
+    start
 }
 
 function status() {
