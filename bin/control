@@ -84,7 +84,7 @@ function start() {
     # 2) customize base jboss / bpms runtime by executing exserver cli
     $OPENSHIFT_JBOSSEAP_DIR/bin/tools/jboss-cli.sh --connect --controller=$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT -c --file=$OPENSHIFT_EXSERVER_DIR/filtered/exserver-project.cli
 
-    # 3) customer base jboss / bpms runtime by executing messagin clie 
+    # 3) customer base jboss / bpms runtime by executing messaging cli 
     $OPENSHIFT_JBOSSEAP_DIR/bin/tools/jboss-cli.sh --connect --controller=$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_MANAGEMENT_NATIVE_PORT -c --file=$OPENSHIFT_EXSERVER_DIR/filtered/messaging-config.cli
 
     # 4)  make kieFileSystem if not already exists and copy kie.deployments.json to $OPENSHIFT_DATA_DIR
@@ -93,15 +93,16 @@ function start() {
 
 
     # 5) start deployment service
-    # curl -v -u jboss:brms -X PUT http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/all/deploymentUnits
+    curl -v -u jboss:brms -X PUT http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/all/deploymentUnits
   
 }
 
 function printExServerRestCalls() {
-    echo "check ExServer availability           :  curl -v -u jboss:brms -X GET http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/any/sanityCheck";
+    echo "check ExServer availability           : curl -v -u jboss:brms -X GET http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/any/sanityCheck";
     echo "kick start deployment service         : curl -v -u jboss:brms -X PUT http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/all/deploymentUnits";
-    echo "check WIH registration                :  curl -v -u jboss:brms -X GET http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/com.redhat.gpe:test-module:1.0/workItemHandlers";
-    echo "review bpmn2 processes of a deployment:  curl -v -u jboss:brms -X GET http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/com.redhat.gpe:test-module:1.0/processes";
+    echo "check WIH registration                : curl -v -u jboss:brms -X GET http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/runtime/com.redhat.gpe:test-module:1.0/workItemHandlers";
+    echo "review bpmn2 processes of a deployment: curl -v -u jboss:brms -X GET http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/additional/com.redhat.gpe:test-module:1.0/processes";
+    echo "start a process                       : curl -v -u jboss:brms -X POST http://$OPENSHIFT_JBOSSEAP_IP:$OPENSHIFT_JBOSSEAP_HTTP_PORT/kie-jbpm-services/rest/runtime/git-playground/process/policyQuoteTask/start"  
     
 }
 
