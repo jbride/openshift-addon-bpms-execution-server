@@ -2,16 +2,25 @@
 
 source $OPENSHIFT_CARTRIDGE_SDK_BASH
 
-EXSERVER_BIN_DIR=${OPENSHIFT_EXSERVER_DIR}/bin
-
 cartridge_type="exserver"
 version=6.0
+
+# check prior installation of BPMS Base cartridge
+function isBpmsBaseInstalled() {
+    if [  "x${OPENSHIFT_BPMS_VERSION}" = "x" ]; then
+        echo "Please install BPMS Base cartridge prior to installing this BPMS HA Cartridge"
+        return 1
+    fi
+    echo "Nice:  BPMS Base cartridge is installed in this application"
+    return 0
+}
+
 
 # Check if the server http port is up
 function isdbup() {
 
     if [  "x${OPENSHIFT_MYSQL_DB_HOST}" = "x" ]; then
-        echo "unable to locate the following env variable:  OPENSHIFT_MYSQL_DB_HOST"
+        echo "Unable to locate the following env variable:  OPENSHIFT_MYSQL_DB_HOST.  Please install MYSQL cartridge prior to installing this BPMS Execution Server cartridge"
         return 1
     fi
 
@@ -64,10 +73,13 @@ function replace_envs() {
 
 function start() {
 
-    # no point in deploying ex server is database is not up
+    # no point in deploying ex server if base bpms is not already installed
+    isBpmsBaseInstalled
+
+    # no point in deploying ex server if database is not up
     if ! isdbup; then
         echo "Timed out waiting for database listener port"
-        exit 0
+        exit 1
     fi 
 
 
@@ -126,6 +138,11 @@ function restart() {
    
     stop
     start
+}
+
+function isrunning() {
+    // TO-DO:  check if execution-server deployment has occurred
+    return 0
 }
 
 function status() {
